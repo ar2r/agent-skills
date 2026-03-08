@@ -108,6 +108,73 @@ Dig until you find the **true root cause**, not just a symptom:
 
 **Document your reasoning** - this helps reviewers understand the fix.
 
+### 3.5 Advanced Investigation Techniques
+
+#### For Intermittent/Heisenbugs:
+- Add extensive logging with timestamps
+- Check for non-deterministic code (random, Date.now(), concurrent access)
+- Look for external dependencies (APIs, databases, file system)
+- Check resource exhaustion (memory, connections, file handles)
+- Use `git bisect` to find when bug was introduced
+
+#### For Performance Issues:
+- Profile before guessing (use language-specific profilers)
+- Check algorithm complexity (O(n²) vs O(n))
+- Look for N+1 queries
+- Check network calls in loops
+- Measure, don't assume
+
+#### For Integration Bugs:
+- Verify API contracts (request/response schemas)
+- Check authentication/authorization
+- Verify timeouts and retry logic
+- Check idempotency assumptions
+- Look for version mismatches
+
+#### Use LSP for Code Intelligence:
+- Go to Definition - find where symbols are defined
+- Find References - find all usages
+- Find Implementations - find interface implementations
+- Call Hierarchy - understand call chains
+
+---
+
+## Phase 3.5: Production Bug Specifics
+
+When the bug is in production (not local/dev environment):
+
+### Immediate Actions:
+1. **Assess impact** - how many users affected?
+2. **Check severity** - data loss? security? availability?
+3. **Decide**: hotfix now vs fix properly later
+
+### Investigation Constraints:
+- Can't always reproduce locally
+- Logs may be incomplete
+- Must be careful not to make things worse
+- May need to work under time pressure
+
+### Severity-Based Approach:
+
+| Severity | Approach | Timeline |
+|----------|----------|----------|
+| **Critical** (data loss, security breach) | Emergency hotfix, skip some validation | Minutes |
+| **High** (core feature broken) | Quick fix + proper follow-up | Hours |
+| **Medium** (feature degraded) | Normal fix cycle | Days |
+| **Low** (minor issue) | Backlog, fix when convenient | Weeks |
+
+### Communication Plan:
+- Notify stakeholders about critical issues
+- Provide status updates at regular intervals
+- Document for post-mortem if needed
+
+### Hotfix Checklist:
+- [ ] Minimal change that addresses immediate issue
+- [ ] Tested on staging if possible
+- [ ] Monitoring/alerting ready for deployment
+- [ ] Rollback plan documented
+- [ ] Post-mortem scheduled for proper fix
+
 ---
 
 ## Phase 4: Fix Implementation
@@ -132,6 +199,37 @@ Before finalizing, assess:
 | **Data** | Could this corrupt or lose data? |
 | **API** | Does this change external contracts? |
 | **Dependencies** | Does this require package changes? |
+
+### 4.3 Fix Validation Loop
+
+**If the first fix attempt doesn't work:**
+
+1. **Analyze failure** - Why didn't it work? What did you miss?
+2. **Re-examine assumptions** - Were your assumptions about root cause correct?
+3. **Consider alternatives** - Is there a simpler or safer approach?
+
+#### When Stuck:
+- Ask user for more context
+- Try to reproduce with additional logging
+- Consider if this is actually multiple bugs
+- Check for related issues in the same area
+
+#### Alternative Fix Strategies:
+
+| Risk Level | Strategy |
+|------------|----------|
+| Complex change | Break into smaller fixes |
+| High risk | Feature flag + gradual rollout |
+| Data change | Migration script + rollback |
+| Breaking API | Version bump + deprecation path |
+
+### 4.4 Pre-Commit Verification
+
+Before considering fix complete:
+- [ ] Bug is reproducible before fix
+- [ ] Bug is NOT reproducible after fix
+- [ ] No new errors introduced
+- [ ] Edge cases considered
 
 ---
 
