@@ -4,20 +4,20 @@
     "name": "Artur Khasanov"
   },
   "metadata": {
-    "description": "Collection of Claude Code skills and plugins for professional bug fixing",
-    "version": "1.0.0",
+    "description": "Collection of Claude Code skills for bug fixing and GitLab merge request workflows",
+    "version": "2.0.0",
     "homepage": "https://github.com/ar2r/claude-skills",
     "pluginRoot": "./plugins"
   },
   "plugins": [
     {
-      "name": "ar2r",
-      "source": "./plugins/fix-bug-pro",
-      "description": "Comprehensive bug investigation, fix, and regression-proofing workflow for professional bug fixing",
-      "version": "1.0.0",
+      "name": "dev-review-pro",
+      "source": "./plugins/dev-review-pro",
+      "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, and generate MR descriptions",
+      "version": "2.0.0",
       "author": { "name": "Artur Khasanov" },
       "category": "development",
-      "keywords": ["bug-fixing", "debugging", "testing", "code-quality"],
+      "keywords": ["bug-fixing", "debugging", "testing", "code-quality", "gitlab", "merge-requests", "code-review"],
       "strict": true
     }
   ]

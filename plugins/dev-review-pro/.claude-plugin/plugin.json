@@ -1,0 +1,11 @@
+{
+  "name": "dev-review-pro",
+  "version": "2.0.0",
+  "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, and generate MR descriptions",
+  "author": {
+    "name": "Artur Khasanov"
+  },
+  "repository": "https://github.com/ar2r/claude-skills",
+  "license": "MIT",
+  "keywords": ["bug-fixing", "debugging", "testing", "code-quality", "gitlab", "merge-requests", "code-review"]
+}
