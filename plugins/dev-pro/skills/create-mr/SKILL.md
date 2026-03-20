@@ -40,7 +40,7 @@ git show-ref --verify --quiet refs/remotes/origin/main && echo main \
 ## Шаг 2 — Проверь существующий MR
 
 ```bash
-glab mr list --source-branch <current_branch> --repo <host>/<namespace>/<repo> --state opened
+glab mr list --source-branch <current_branch> --repo <host>/<namespace>/<repo>
 ```
 
 Если MR **уже существует** — предложи:
