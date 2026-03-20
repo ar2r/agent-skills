@@ -1,5 +1,5 @@
 ---
-name: fix-bug-pro
+name: fix-bug
 description: |
   Comprehensive bug investigation, fix, and regression-proofing workflow.
   Use this skill when the user reports a bug, asks to fix an error, mentions

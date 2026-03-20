@@ -1,5 +1,5 @@
 {
-  "name": "dev-review-pro",
+  "name": "dev-pro",
   "version": "2.0.0",
   "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, and generate MR descriptions",
   "author": {

@@ -1,10 +1,10 @@
-# dev-review-pro Plugin
+# dev-pro Plugin
 
 Workflow collection for professional bug fixing and GitLab merge request descriptions.
 
 ## Included Skills
 
-### `fix-bug-pro`
+### `fix-bug`
 
 Structured 7-phase workflow for bug fixing:
 
@@ -24,13 +24,13 @@ Typical triggers:
 - "This crashes when I click X"
 - "почини баг", "исправь ошибку", "debug", "failing test", "not working"
 
-### `mr-desc`
+### `describe-mr`
 
 Generates structured Merge Request descriptions in Russian from GitLab metadata, commits, and diffs. Can publish the final text with `glab mr update`.
 
 Typical triggers:
 
-- `/mr-desc https://gitlab.example.com/team/app/-/merge_requests/123`
+- `/describe-mr https://gitlab.example.com/team/app/-/merge_requests/123`
 - "Сгенерируй описание PR для ревью"
 - "Нужен текст для MR"
 - "Обнови описание merge request в GitLab"
@@ -48,7 +48,7 @@ Typical triggers:
 Copy the plugin directory to your Claude plugins folder:
 
 ```bash
-cp -r plugins/dev-review-pro ~/.claude/plugins/
+cp -r plugins/dev-pro ~/.claude/plugins/
 ```
 
 ## Usage
@@ -59,14 +59,14 @@ Examples:
 Fix the null pointer exception in UserService
 Debug why the payment is failing
 This test is failing, can you fix it?
-/mr-desc https://gitlab.example.com/team/app/-/merge_requests/123
+/describe-mr https://gitlab.example.com/team/app/-/merge_requests/123
 Сгенерируй описание PR для ревью
 ```
 
 ## Notes
 
-- `fix-bug-pro` focuses on diagnosis, implementation, regression coverage, and rollback planning.
-- `mr-desc` focuses on review-ready Markdown and optionally publishing it to GitLab.
+- `fix-bug` focuses on diagnosis, implementation, regression coverage, and rollback planning.
+- `describe-mr` focuses on review-ready Markdown and optionally publishing it to GitLab.
 - For MR publishing, `glab` should be installed and authenticated against the target GitLab instance.
 
 ## License
