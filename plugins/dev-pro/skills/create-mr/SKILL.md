@@ -1,6 +1,6 @@
 ---
 name: create-mr
-description: "Создаёт и обновляет Merge Request в GitLab через glab: пушит ветку, автоматически генерирует описание на основе диффа и публикует MR. Используй этот скилл при любом упоминании создания или обновления MR/PR в GitLab — даже если пользователь говорит неформально: «создай MR», «открой merge request», «залей на ревью», «запушь и создай PR», «сделай пул-реквест», «ветка готова», «можно смотреть», «оформи для ревью». Также применяй, если пользователь хочет обновить описание уже существующего MR."
+description: "Создаёт Merge Request в GitLab из текущей ветки через glab: пушит ветку, генерирует описание и публикует MR. Используй этот скилл всякий раз, когда пользователь просит «создать MR», «открыть merge request», «запушить ветку и создать MR», «сделать PR/MR в GitLab», «залить ветку на ревью» или любую похожую формулировку."
 ---
 
 # Create Merge Request
@@ -69,11 +69,8 @@ git log origin/<target_branch>..HEAD --oneline --no-merges
 > **Параметры MR (Enter — пропустить):**
 > - 🎫 Jira-тикет: ← только если не найден автоматически
 > - 📋 Черновик (draft)? [y/N]:
-> - 👤 Assignee (GitLab username):
-> - 👁 Reviewers (через запятую):
-> - 🏷 Labels (через запятую):
 
-Сохрани: **jira_ticket**, **is_draft**, **assignee**, **reviewers**, **labels**.
+Сохрани: **jira_ticket**, **is_draft**.
 
 ---
 
@@ -183,9 +180,6 @@ ARGS=(mr create
   --title "<mr_title>"
   --description "$(cat /tmp/mr_desc.md)"
 )
-[ -n "<assignee>" ] && ARGS+=(--assignee "<assignee>")
-IFS=',' read -ra R <<< "<reviewers>"; for r in "${R[@]}"; do r=$(echo "$r"|xargs); [ -n "$r" ] && ARGS+=(--reviewer "$r"); done
-[ -n "<labels>" ]   && ARGS+=(--label "<labels>")
 [ "<is_draft>" = "true" ] && ARGS+=(--draft)
 
 MR_OUTPUT=$(glab "${ARGS[@]}")
