@@ -1,16 +1,11 @@
 ---
 name: describe-mr
-description: >
-  Генерирует описание Merge Request на русском языке и публикует его в GitLab
-  через glab. Используй этот скилл когда пользователь передаёт ссылку на MR
-  (например /describe-mr https://gitlab.../merge_requests/123), или просит
-  написать, обновить, сгенерировать описание PR/MR для существующего мерж-реквеста.
-  Для создания нового MR — используй скилл create-mr.
+description: "Генерирует готовое описание Merge Request на русском языке по git-диффу: анализирует изменения, заполняет шаблон с секциями (что сделано, тип изменений, технические детали, как проверить). Используй этот скилл всякий раз, когда пользователь просит «описать MR», «написать описание PR», «сгенерировать описание для мержа», передаёт ссылку на MR (например /describe-mr https://gitlab.../merge_requests/42), или просит описать текущую ветку. Работает в двух режимах: по URL конкретного MR или по текущей ветке без аргументов. Скилл только генерирует текст — не публикует MR. Для создания нового MR используй скилл create-mr."
 ---
 
 # MR Description
 
-Скилл генерирует описание для уже существующего MR и публикует его через `glab`.
+Скилл генерирует текстовое описание для merge request на основе diff-а.
 
 ---
 
@@ -20,36 +15,24 @@ description: >
 ```
 /describe-mr https://gitlab.company.com/team/repo/-/merge_requests/42
 ```
-Извлеки из URL: **host**, **namespace/repo**, **mr_id**.
+Извлеки из URL: **host**, **namespace/repo**, **mr_id**.  
+Затем получи source_branch и target_branch:
+```bash
+glab mr view <mr_id> --repo <host>/<namespace>/<repo>
+```
 
 **Режим Б — без аргументов (текущая ветка):**
 ```bash
 git branch --show-current          # source_branch
 git remote get-url origin          # → host, namespace/repo
-glab mr list --source-branch <source_branch> --repo <host>/<namespace>/<repo> --state opened
+git remote show origin | grep "HEAD branch" | awk '{print $NF}'  # target_branch
 ```
-Если MR найден — сохрани **mr_id**. Если не найден — предупреди и продолжи без mr_id (описание для копирования).
 
-Если не в git-репозитории или glab не аутентифицирован — останови с сообщением об ошибке.
+Если не в git-репозитории — останови с сообщением об ошибке.
 
 ---
 
-## Шаг 2 — Получи ветки MR
-
-```bash
-glab mr view <mr_id> --repo <host>/<namespace>/<repo>
-```
-
-Извлеки **source_branch** и **target_branch**.
-
-В Режиме Б без mr_id — определи target_branch:
-```bash
-git remote show origin | grep "HEAD branch" | awk '{print $NF}'
-```
-
----
-
-## Шаг 3 — Собери diff
+## Шаг 2 — Собери diff
 
 ```bash
 git log origin/<target_branch>..origin/<source_branch> --oneline --no-merges
@@ -66,7 +49,7 @@ git diff origin/<target_branch>...origin/<source_branch> -- <path/to/file>
 
 ---
 
-## Шаг 4 — Сгенерируй описание
+## Шаг 3 — Сгенерируй описание
 
 Проанализируй изменения: что сделано, зачем, как реализовано, что может сломаться, как проверить.
 
@@ -77,7 +60,13 @@ git diff origin/<target_branch>...origin/<source_branch> -- <path/to/file>
 <2–4 предложения: ЧТО сделано и ЗАЧЕМ. Контекст, а не пересказ кода.>
 
 ## 🔧 Тип изменений
-- [ ] ✨ feat  - [ ] 🐛 fix  - [ ] ♻️ refactor  - [ ] 📦 chore  - [ ] 📝 docs  - [ ] ✅ test  - [ ] ⚡ perf
+- [ ] ✨ feat
+- [ ] 🐛 fix
+- [ ] ♻️ refactor
+- [ ] 📦 chore
+- [ ] 📝 docs
+- [ ] ✅ test
+- [ ] ⚡ perf
 
 ## 📝 Что изменено
 - **<Модуль>**: <что и зачем>
@@ -102,27 +91,7 @@ git diff origin/<target_branch>...origin/<source_branch> -- <path/to/file>
 <Ссылки на тикеты. Если нет — опустить.>
 ```
 
----
-
-## Шаг 5 — Интерактивный цикл
-
-Выведи описание и спроси:
-
-> **Что делаем?**
-> 1. 🚀 Опубликовать в MR !<mr_id>
-> 2. ✅ Готово (оставить себе)
-> 3. ✏️ Доработать — напиши правки
-
-- **Опубликовать:**
-  ```bash
-  cat > /tmp/mr_desc.md << 'EOF'
-  <описание>
-  EOF
-  glab mr update <mr_id> --repo <host>/<namespace>/<repo> --description "$(cat /tmp/mr_desc.md)"
-  ```
-  Сообщи: `✅ Описание опубликовано в MR !<mr_id>`
-
-- **Доработать:** прими правки, обнови описание, повтори цикл.
+Выведи готовое описание. Если пользователь хочет правки — прими их и обнови текст.
 
 ---
 
