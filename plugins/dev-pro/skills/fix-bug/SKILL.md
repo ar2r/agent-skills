@@ -10,7 +10,7 @@ description: |-
 
   Examples:
   - user: "После последнего изменения упал тест UserService" → локализовать регрессию, исправить причину и добавить regression test
-  - user: "Here's the stack trace: TypeError: Cannot read properties of undefined" → пройти от точки падения к первопричине и внести минимальный safe fix
+  - user: "go test ./... падает с panic: runtime error: invalid memory address" → пройти от stack trace к nil/zero-value предпосылке и внести минимальный safe fix
   - user: "API sometimes returns 500 only in production" → проверить config/integration path, предложить safe mitigation и подтвердить risk
   - user: "This test is flaky in CI" → воспроизвести nondeterminism, убрать источник гонки и добавить targeted validation
   - user: "После рефакторинга кнопка не работает" → сузить область поиска, подтвердить сломанную предпосылку и исправить ее
@@ -30,6 +30,8 @@ description: |-
 - За один раз задавай не больше 3 коротких блокирующих вопросов.
 - Приоритезируй источники сигнала так:
   `stack trace > failing test > воспроизведение > логи > подозрительный файл/модуль > недавние изменения`.
+- Если кодовая база на Go, сначала сузь проблему до пакета, теста, handler-а
+  или use case, а уже потом расширяй проверку до `./...`.
 
 ## Основной workflow
 
@@ -50,8 +52,16 @@ description: |-
   релевантный участок кода.
 - Попробуй воспроизвести проблему самым маленьким надежным сценарием:
   точечный тест, команда, endpoint, локальный шаг.
+- Для Go сначала используй самый узкий надежный сценарий вида
+  `go test ./path/to/pkg -run TestName -count=1`; для flaky или
+  concurrency-багов добавляй `-race`, а к полному `go test ./...` переходи
+  только после локализации.
 - Если воспроизведение не удается, опирайся на анализ кодового пути, логи и
   историю git. Явно помечай, где вывод основан на фактах, а где на гипотезе.
+- Для panic и stack trace в Go двигайся от места падения к значению или
+  инварианту, который был нарушен: `nil`, zero value, typed-nil interface,
+  некорректная инициализация, потерянный `context`, shared state между
+  goroutine.
 - Не делай speculative fix. Если баг не воспроизводится и у тебя нет сильной
   цепочки доказательств от симптома к сломанному предположению, не меняй код
   "по ощущению": сначала добудь еще один сильный сигнал или запроси
@@ -88,6 +98,9 @@ description: |-
   проходит после.
 - Сначала запускай самую узкую релевантную проверку, затем расширяй набор
   тестов только если риск это оправдывает.
+- Для Go предпочитай table-driven/subtest проверки для edge cases,
+  `httptest`/контрактные проверки на HTTP-границах и `go test -race` для
+  конкурентных дефектов.
 - Для prod/high-risk багов не ограничивайся только узким регрессионным тестом:
   после него выполни еще одну ближайшую граничную проверку
   `integration/contract/smoke/env-relevant`, которая подтверждает исправление
@@ -99,6 +112,9 @@ description: |-
   понимания исправления.
 - Если баг связан с конкурентностью, интеграцией, производительностью или
   безопасностью, прочитай [test-strategy.md](./references/test-strategy.md).
+- Если кодовая база на Go или симптом связан с `panic`, `goroutine`, `context`,
+  `net/http` или flaky `go test`, прочитай
+  [go-debugging.md](./references/go-debugging.md).
 
 ### 5. Ответ пользователю
 
@@ -132,5 +148,8 @@ description: |-
   Открывай для prod-only, hotfix и high-risk исправлений.
 - [test-strategy.md](./references/test-strategy.md)
   Открывай, когда нужно подобрать правильный тип регрессионного теста.
+- [go-debugging.md](./references/go-debugging.md)
+  Открывай для Go-кодовой базы, panic/runtime ошибок, flaky/concurrency тестов
+  и локализации дефектов на package/handler/use-case уровне.
 - [report-template.md](./references/report-template.md)
   Открывай, если нужен формальный отчет по исправлению или инциденту.
