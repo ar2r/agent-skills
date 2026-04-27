@@ -6,7 +6,7 @@ Workflow collection for professional bug fixing and GitLab merge request descrip
 
 ### `create-mr`
 
-Creates a Merge Request in GitLab from the current branch: pushes the branch, generates a structured description, and publishes the MR via `glab`.
+Creates a Merge Request in GitLab from the current branch: asks only whether the MR should be draft, then auto-generates the title and structured description, pushes the branch, and publishes the MR via `glab`. If an MR for the current branch already exists, it updates that MR description instead of creating a new one.
 
 Typical triggers:
 
@@ -77,7 +77,7 @@ This test is failing, can you fix it?
 ## Notes
 
 - `fix-bug` focuses on diagnosis, implementation, regression coverage, and rollback planning.
-- `create-mr` pushes the current branch, generates a description, and publishes the MR to GitLab.
+- `create-mr` asks only for draft mode when creating a new MR, auto-generates the title and description, and updates the existing MR description if the branch is already on review.
 - `describe-mr` generates a review-ready Markdown description for an existing MR and optionally publishes it to GitLab.
 - For MR workflows, `glab` should be installed and authenticated against the target GitLab instance.
 
