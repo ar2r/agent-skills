@@ -6,17 +6,17 @@
 
 ```
 /plugin marketplace add ar2r/agent-skills
-/plugin install dev-pro@ar2r-agent-skills
+/plugin install ar2r-skills@ar2r-skills
 # Обновление
-/plugin marketplace update ar2r-agent-skills
+/plugin marketplace update ar2r-skills
 ```
 
 ## Установка в Qwen CLI (Nessy CLI)
 
 ```
-qwen extensions install https://github.com/ar2r/agent-skills:dev-pro --ref=master
+qwen extensions install https://github.com/ar2r/agent-skills:ar2r-skills --ref=master
 # or
-nessy extensions install https://github.com/ar2r/agent-skills:dev-pro --ref=master
+nessy extensions install https://github.com/ar2r/agent-skills:ar2r-skills --ref=master
 
 # Обновление
 qwen extensions update --all
@@ -30,16 +30,16 @@ nessy extensions update --all
 
 ```
 qwen extensions uninstall dev-pro
-qwen extensions install https://github.com/ar2r/agent-skills:dev-pro --ref=master
+qwen extensions install https://github.com/ar2r/agent-skills:ar2r-skills --ref=master
 ```
 
 ## Доступные плагины
 
 | Плагин | Описание |
 |--------|----------|
-| **dev-pro** | Набор workflows для исправления багов и подготовки описаний Merge Request в GitLab |
+| **ar2r-skills** | Набор workflows для исправления багов и подготовки описаний Merge Request в GitLab |
 
-## Skills в `dev-pro`
+## Skills в `ar2r-skills`
 
 | Skill | Описание |
 |-------|----------|
@@ -84,9 +84,9 @@ qwen extensions install https://github.com/ar2r/agent-skills:dev-pro --ref=maste
 ```
 agent-skills/
 ├── qwen-extension.json
-├── skills -> plugins/dev-pro/skills
+├── skills -> plugins/ar2r-skills/skills
 ├── .claude-plugin/marketplace.json
-└── plugins/dev-pro/
+└── plugins/ar2r-skills/
     ├── qwen-extension.json
     ├── README.md
     └── skills/

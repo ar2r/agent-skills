@@ -1,5 +1,5 @@
 {
-  "name": "ar2r-agent-skills",
+  "name": "ar2r-skills",
   "owner": {
     "name": "Artur Khasanov"
   },
@@ -11,8 +11,8 @@
   },
   "plugins": [
     {
-      "name": "dev-pro",
-      "source": "./plugins/dev-pro",
+      "name": "ar2r-skills",
+      "source": "./plugins/ar2r-skills",
       "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, create and describe MRs",
       "version": "2.0.11",
       "author": { "name": "Artur Khasanov" },

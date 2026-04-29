@@ -1,4 +1,4 @@
-# dev-pro Plugin
+# ar2r-skills Plugin
 
 Workflow collection for professional bug fixing and GitLab merge request descriptions.
 
@@ -51,7 +51,7 @@ Typical triggers:
 
 ```bash
 /plugin marketplace add ar2r/agent-skills
-/plugin install dev-pro@ar2r-agent-skills
+/plugin install ar2r-skills@ar2r-skills
 ```
 
 ### Option 2: Manual Installation
@@ -59,7 +59,7 @@ Typical triggers:
 Copy the plugin directory to your Claude plugins folder:
 
 ```bash
-cp -r plugins/dev-pro ~/.claude/plugins/
+cp -r plugins/ar2r-skills ~/.claude/plugins/
 ```
 
 ### Qwen / Nessy CLI
@@ -67,8 +67,8 @@ cp -r plugins/dev-pro ~/.claude/plugins/
 Install from the repository as a native, updatable Qwen extension:
 
 ```bash
-qwen extensions install https://github.com/ar2r/agent-skills:dev-pro --ref=master
-qwen extensions update dev-pro
+qwen extensions install https://github.com/ar2r/agent-skills:ar2r-skills --ref=master
+qwen extensions update ar2r-skills
 ```
 
 ## Usage
