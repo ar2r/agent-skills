@@ -1,20 +1,27 @@
-# Claude Skills
+# Agent Skills
 
-Плагины и skills для Claude Code.
+Плагины и skills для AI агентов.
 
-## Установка
+## Установка в Claude code
 
 ```
 /plugins add https://github.com/ar2r/agent-skills
-```
-
-## Обновление
-
-```
+# Обновление
 /plugins update dev-pro
 ```
 
-Если плагин уже был установлен под старым именем `fix-bug`, переустанови его из репозитория после обновления.
+## Установка в Qwen CLI (Nessy CLI)
+
+```
+qwen extensions install https://github.com/ar2r/agent-skills
+# or
+nessy extensions install https://github.com/ar2r/agent-skills
+
+# Обновление
+qwen extensions update --all
+# or
+nessy extensions update --all
+```
 
 ## Доступные плагины
 
