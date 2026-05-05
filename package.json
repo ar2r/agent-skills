@@ -1,0 +1,18 @@
+{
+  "name": "@ar2r/agent-skills",
+  "version": "2.0.11",
+  "description": "Claude Code skills and plugins: bug fixing and GitLab merge request workflows",
+  "keywords": ["claude-code", "skills", "plugins", "gitlab", "bug-fixing"],
+  "homepage": "https://github.com/ar2r/agent-skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ar2r/agent-skills.git"
+  },
+  "license": "MIT",
+  "author": "Artur Khasanov",
+  "files": [
+    ".claude-plugin/",
+    "plugins/",
+    "qwen-extension.json"
+  ]
+}
