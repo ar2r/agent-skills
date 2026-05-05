@@ -9,19 +9,18 @@ A collection of **Claude Code skills and plugins**. Skills are instruction files
 ## Repository structure
 
 ```
-.claude-plugin/marketplace.json          # Top-level marketplace registry
-qwen-extension.json                      # Native Qwen/Nessy extension manifest (root)
-plugins/<plugin-name>/
-  qwen-extension.json                    # Plugin-local Qwen manifest
-  skills/<skill-name>/
-    SKILL.md                             # The skill itself (YAML frontmatter + Markdown)
-    references/                          # Optional reference docs read by the skill
-    evals/evals.json                     # Evaluation test cases for the skill
+.claude-plugin/marketplace.json          # Claude Code marketplace registry
+qwen-extension.json                      # Qwen/Nessy extension manifest
+nessy-extension.json                     # Nessy extension manifest
+skills/<skill-name>/
+  SKILL.md                               # The skill itself (YAML frontmatter + Markdown)
+  references/                            # Optional reference docs read by the skill
+  evals/evals.json                       # Evaluation test cases for the skill
 ```
 
 ## Adding or editing a skill
 
-1. Create or edit `plugins/ar2r-skills/skills/<skill-name>/SKILL.md`.
+1. Create or edit `skills/<skill-name>/SKILL.md`.
 2. The YAML frontmatter `description` field is the triggering signal — write it to match natural-language phrases users actually type (include Russian phrases where applicable):
    ```yaml
    ---
@@ -33,8 +32,7 @@ plugins/<plugin-name>/
    ---
    ```
 3. Add evals in `evals/evals.json` — an array of `{id, name, prompt, expected_output, files}` objects, one per distinct trigger scenario.
-4. **No need to update `marketplace.json`** when adding skills to the existing `ar2r-skills` plugin — the plugin uses `"strict": false` and auto-discovers skills from `./skills/`.
-5. Update `marketplace.json` only when adding a **new plugin** or renaming/removing an existing one.
+4. **No need to update `marketplace.json`** — the plugin uses `"strict": false` and auto-discovers skills from `./skills/`.
 
 ## Language conventions
 
