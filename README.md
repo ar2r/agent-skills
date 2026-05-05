@@ -11,17 +11,13 @@
 /plugin marketplace update ar2r-skills
 ```
 
-## Установка в Qwen CLI (Nessy CLI)
+## Установка в Qwen CLI
 
 ```
-qwen extensions install @ar2r/agent-skills
-# or
-nessy extensions install @ar2r/agent-skills
+qwen extensions install https://github.com/ar2r/agent-skills
 
 # Обновление
 qwen extensions update --all
-# or
-nessy extensions update --all
 ```
 
 ## Доступные плагины

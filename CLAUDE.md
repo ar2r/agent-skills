@@ -66,6 +66,6 @@ plugins/<plugin-name>/
 ```
 
 **Qwen / Nessy CLI:**
-```bash
+```
 qwen extensions install https://github.com/ar2r/agent-skills --ref=master
 ```
