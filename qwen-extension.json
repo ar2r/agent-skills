@@ -2,5 +2,5 @@
   "name": "ar2r-skills",
   "version": "2.0.11",
   "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, create and describe MRs",
-  "skills": "skills"
+  "skills": "plugins/ar2r-skills/skills"
 }

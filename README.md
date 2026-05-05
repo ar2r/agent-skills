@@ -73,7 +73,6 @@ agent-skills/
 ├── qwen-extension.json
 ├── .claude-plugin/marketplace.json
 └── plugins/ar2r-skills/
-    ├── qwen-extension.json
     ├── README.md
     └── skills/
         ├── fix-bug/
