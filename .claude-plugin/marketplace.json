@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Collection of AI agent skills for bug fixing and GitLab merge request workflows",
-    "version": "2.0.11",
+    "version": "2.0.12",
     "homepage": "https://github.com/ar2r/agent-skills",
     "pluginRoot": "./plugins"
   },
@@ -14,7 +14,7 @@
       "name": "ar2r-skills",
       "source": "./plugins/ar2r-skills",
       "description": "Bug-fixing and GitLab merge request workflows: investigate issues, add regression tests, create and describe MRs",
-      "version": "2.0.11",
+      "version": "2.0.12",
       "author": { "name": "Artur Khasanov" },
       "repository": "https://github.com/ar2r/agent-skills",
       "license": "MIT",
