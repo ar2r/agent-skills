@@ -214,15 +214,20 @@ git log origin/<target_branch>..HEAD --oneline --no-merges
 
 ## Шаг 5 — Проверка ветки в remote
 
-> ⚠️ Скилл **не пушит** ветку — у агента нет прав на `git push`. Ветка должна уже существовать в remote (её пушит разработчик). Перед созданием MR только проверь её наличие:
+> ⚠️ Скилл **не пушит** ветку — у агента нет прав на `git push`. Ветка должна уже существовать в remote (её пушит разработчик). Перед созданием MR только проверь её наличие.
+
+> В sandbox-окружениях (tclaude) `git ls-remote` бьётся в SSH (`~/.ssh` закрыт) и падает `Host key verification failed` даже когда ветка есть. Проверяй наличие через GitLab API (`dp glab api`), не через `git`:
 
 ```bash
-git ls-remote --exit-code origin <current_branch> >/dev/null \
+ENC_REPO=$(printf '%s' "<namespace>/<repo>" | sed 's/\//%2F/g')
+ENC_BRANCH=$(printf '%s' "<current_branch>" | sed 's/\//%2F/g')
+
+dp glab api "projects/${ENC_REPO}/repository/branches/${ENC_BRANCH}" >/dev/null 2>&1 \
   && echo "✅ Ветка <current_branch> найдена в remote." \
   || { echo "❌ Ветка <current_branch> не найдена в remote. Скилл не пушит ветки — запушь её вручную (git push -u origin <current_branch>) и повтори." && exit 1; }
 ```
 
-Если ветка не найдена (`exit 1`) — останови workflow с сообщением, MR не создавай.
+200 → ветка есть (exit 0). 404 → нет (exit ненулевой). Если ветка не найдена — останови workflow с сообщением, MR не создавай.
 
 ---
 
